@@ -3,9 +3,21 @@ import typing
 
 class Query(object):
     """
-    query structure to retrieve data
+    query structure  to be used by frontend
+    to retrieve data
+
+    eg:-
+    {
+        "query": {
+            "author": "random",
+            "date": {"$lt": someDate}
+        },
+        "sorting": {
+            "username": 1, # Ascending by username
+            "created": -1  # Descending by created
+        }
+    }
     """
 
-    filters = typing.Dict[str, typing.Union[str, int]]
-    sorting = typing.Dict[str, str]
-    ranges = typing.Dict[str, typing.Dict[str, typing.Union[str, int]]]
+    query = typing.Dict[str, typing.Union[str, dict]]
+    sorting = typing.Dict[str, typing.Literal[-1, 1]]

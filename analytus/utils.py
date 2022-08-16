@@ -1,8 +1,22 @@
+from typing import (
+    Tuple,
+    List,
+    Sequence,
+)
 from pymongo import MongoClient
 from django.conf import settings
 from django.utils import timezone
 
 from .types import Query
+
+
+def dict_to_tuple_list(data: dict) -> List[Tuple[str, any]]:
+    """
+    convert a dict to list of tuples
+    input: {"created": -1, "username": 1}
+    output: [("created", -1), ("username", 1)]
+    """
+    return [(key, val) for key, val in data.items()]
 
 
 class MongoDBHandler:
@@ -17,10 +31,12 @@ class MongoDBHandler:
 
     def query(self, collection_name: str, query: Query, **kwargs):
         collection = self.db[collection_name]
-        filters = query.get("filters", {})
-        sorting = query.get("sorting", {})
-        ranges = query.get("ranges", {})
-        cursor = collection.find(filters, **kwargs)
+        _query = query.get("query", {})
+        _sorting = query.get("sorting", {})
+        _sorting = dict_to_tuple_list(_sorting)
+        if len(_sorting) == 0:
+            _sorting = [("_id", 1)]
+        cursor = collection.find(_query, **kwargs).sort(_sorting)
         return self.format_results(cursor)
 
     def format_results(self, cursor):
@@ -29,6 +45,3 @@ class MongoDBHandler:
             del i["_id"]
             result.append(i)
         return result
-
-
-db = MongoDBHandler()
