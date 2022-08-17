@@ -128,5 +128,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MONGODB_CONNECTION_STRING = os.getenv(
     'MONGODB_CONNECTION_STRING',
-    'mongodb://localhost:27017/'
+    'mongodb://admin:admin@localhost:27017/'
 )

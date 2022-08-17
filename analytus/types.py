@@ -3,7 +3,7 @@ import typing
 
 class Query(object):
     """
-    query structure  to be used by frontend
+    query structure to be used by frontend
     to retrieve data
 
     eg:-
