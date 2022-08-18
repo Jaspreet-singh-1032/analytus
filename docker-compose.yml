@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  mongodb_container:
+  mongodb:
     image: mongo:5.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -10,6 +10,18 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data:/data/db
+  
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_CONNECTION_STRING=mongodb://admin:admin@mongodb:27017/
+    depends_on:
+      - mongodb
 
 volumes:
   mongo-data:
