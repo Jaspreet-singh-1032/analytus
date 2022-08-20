@@ -9,7 +9,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./mongo-data:/data/db
+      - ./data/mongo:/data/db
   
   web:
     build: .
@@ -23,5 +23,22 @@ services:
     depends_on:
       - mongodb
 
-volumes:
-  mongo-data:
+  redis:
+    image: redis:7.0-alpine
+    command: redis-server
+    ports:
+      - "6379:6379"
+  
+  celery_worker:
+    restart: always
+    build: .
+    command: celery -A analytus worker --loglevel=INFO
+    volumes:
+      - .:/code
+    environment:
+      - MONGODB_CONNECTION_STRING=mongodb://admin:admin@mongodb:27017/
+    depends_on:
+      - mongodb
+      - redis
+      - web
+

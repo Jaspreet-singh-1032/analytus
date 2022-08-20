@@ -130,3 +130,7 @@ MONGODB_CONNECTION_STRING = os.getenv(
     'MONGODB_CONNECTION_STRING',
     'mongodb://admin:admin@localhost:27017/'
 )
+
+
+# Celery
+CELERY_BROKER_URL = 'redis://redis:6379'
