@@ -20,15 +20,17 @@ services:
       - "8000:8000"
     environment:
       - MONGODB_CONNECTION_STRING=mongodb://admin:admin@mongodb:27017/
+      - CELERY_BROKER_URL=redis://redis:6379
     depends_on:
       - mongodb
+      - redis
 
   redis:
     image: redis:7.0-alpine
     command: redis-server
     ports:
       - "6379:6379"
-  
+
   celery_worker:
     restart: always
     build: .
@@ -37,6 +39,7 @@ services:
       - .:/code
     environment:
       - MONGODB_CONNECTION_STRING=mongodb://admin:admin@mongodb:27017/
+      - CELERY_BROKER_URL=redis://redis:6379
     depends_on:
       - mongodb
       - redis
