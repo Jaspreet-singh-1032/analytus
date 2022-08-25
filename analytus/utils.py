@@ -1,11 +1,6 @@
-from typing import (
-    Tuple,
-    List,
-    Sequence,
-)
+from typing import Tuple, List
 from pymongo import MongoClient
 from django.conf import settings
-from django.utils import timezone
 
 from .types import Query
 

@@ -17,15 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from app.views import (
-    AnalyticsViewSet
-)
+from app.views import CaptureViewSet, QueryViewSet
 
 router = routers.DefaultRouter()
 
-router.register(r'analytics', AnalyticsViewSet, basename='analytics')
+router.register(r"capture", CaptureViewSet, basename="capture")
+router.register(r"query", QueryViewSet, basename="query")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls))
 ]

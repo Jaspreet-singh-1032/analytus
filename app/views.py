@@ -15,7 +15,11 @@ logger = logging.getLogger()
 db = MongoDBHandler()
 
 
-class AnalyticsViewSet(viewsets.GenericViewSet):
+class CaptureViewSet(viewsets.GenericViewSet):
+    """
+    Handle data capturing related tasks
+    """
+
     lookup_url_kwarg = "collection"
 
     @action(detail=True, methods=["post"])
@@ -23,7 +27,15 @@ class AnalyticsViewSet(viewsets.GenericViewSet):
         data = request.data
         data["created"] = timezone.localtime()
         capture.delay(collection, data)
-        return Response({"success": "done"}, status=status.HTTP_200_OK)        
+        return Response(status=status.HTTP_200_OK)
+
+
+class QueryViewSet(viewsets.GenericViewSet):
+    """
+    Handle data query related tasks
+    """
+
+    lookup_url_kwarg = "collection"
 
     @action(detail=True, methods=["get"])
     def query(self, request, collection):

@@ -12,12 +12,16 @@ Deprecated==1.2.13
 Django==4.1
 djangorestframework==3.13.1
 dnspython==2.2.1
+flake8==5.0.4
 kombu==5.2.4
+mccabe==0.7.0
 mypy-extensions==0.4.3
 packaging==21.3
 pathspec==0.9.0
 platformdirs==2.5.2
 prompt-toolkit==3.0.30
+pycodestyle==2.9.1
+pyflakes==2.5.0
 pymongo==4.2.0
 pyparsing==3.0.9
 pytz==2022.2.1
